@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A332E">
+<meta name="robots" content="noindex, nofollow">
+<title>مولّد الكرت الشخصي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#07100F;--surface:#101F1C;--surface-2:#162925;--line:rgba(233,226,210,.12);
+    --gold-1:#EBD9AE;--gold-2:#C4A265;--text:#F2EFE8;--muted:rgba(242,239,232,.55);--ok:#86CBA8;--bad:#E8907E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{background:#07100F}
+  body{
+    min-height:100vh;background:radial-gradient(140% 70% at 50% -10%,#1A332E 0%,#0B1A18 45%,var(--ink) 100%);
+    color:var(--text);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;
+    padding:calc(22px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom));
+    display:flex;justify-content:center;
+  }
+  main{width:100%;max-width:460px}
+  h1{font-size:22px;font-weight:600;text-align:center;margin-bottom:4px}
+  .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:20px}
+  .card{background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+  .card h2{font-size:14px;color:var(--gold-2);font-weight:600;margin-bottom:12px}
+  label{display:block;font-size:13px;color:var(--muted);margin:10px 0 6px}
+  select{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;color:var(--text);font-family:inherit;font-size:16px;padding:12px;outline:none}
+  select option,select optgroup{color:#111}
+  input,textarea{
+    width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;color:var(--text);
+    font-family:inherit;font-size:16px;padding:12px;outline:none;transition:border-color .2s
+  }
+  input:focus,textarea:focus{border-color:var(--gold-2)}
+  input.ltr{direction:ltr;text-align:left}
+  textarea{resize:vertical;min-height:64px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+  .btn{
+    width:100%;height:50px;border:0;border-radius:14px;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:10px
+  }
+  .btn:active{transform:scale(.98)}
+  .btn:disabled{opacity:.5}
+  .gold{background:linear-gradient(180deg,var(--gold-1),var(--gold-2));color:#0B1A18}
+  .ghost{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+  .row2{display:flex;gap:10px}
+  .row2 .btn{flex:1}
+
+  .photo{display:flex;align-items:center;gap:14px}
+  .thumb{width:84px;height:84px;border-radius:50%;background:rgba(0,0,0,.3);border:1px dashed var(--line);flex:0 0 84px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px}
+  .thumb.logo{border-radius:20px;background:#fff}
+  .thumb img{width:100%;height:100%;object-fit:cover}
+  .thumb.logo img{object-fit:contain;padding:8px}
+  .photo .side{flex:1}
+  .seg{display:flex;background:rgba(0,0,0,.25);border-radius:12px;padding:4px;margin-top:8px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:14px;padding:8px;border-radius:9px;cursor:pointer}
+  .seg button.on{background:var(--surface-2);color:var(--gold-1);box-shadow:inset 0 0 0 1px var(--line)}
+  .pick{display:inline-block;font-size:14px;color:var(--gold-1);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+  input[type=file]{display:none}
+
+  details summary{cursor:pointer;color:var(--gold-2);font-size:14px;font-weight:600;list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details[open] summary{margin-bottom:12px}
+  .help{font-size:12.5px;color:var(--muted);line-height:1.9;margin-top:10px}
+  .help ol{padding-right:18px}
+  .help b{color:var(--text);font-weight:500}
+
+  .out{direction:ltr;text-align:left;font-size:13px;word-break:break-all;background:rgba(0,0,0,.3);border-radius:12px;padding:12px;line-height:1.6;color:var(--gold-1)}
+  .meter{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:8px}
+  .msg{font-size:13.5px;margin-top:10px;text-align:center;min-height:1em}
+  .msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<main>
+  <h1>مولّد الكرت الشخصي</h1>
+  <p class="sub">عبّي المعلومات، ارفع الصورة، وخود الرابط للشريحة</p>
+
+  <!-- الإعدادات -->
+  <div class="card">
+    <details id="cfgBox">
+      <summary>⚙️ الإعدادات (مرة وحدة بس)</summary>
+      <div class="grid">
+        <div><label>اسم الحساب بجيت هاب</label><input class="ltr" id="c_owner" value="frontique0-web"></div>
+        <div><label>اسم المستودع</label><input class="ltr" id="c_repo" value="nfc-kart"></div>
+        <div><label>الفرع</label><input class="ltr" id="c_branch" value="main"></div>
+        <div><label>المجلد (فاضي = الأساسي)</label><input class="ltr" id="c_folder" value=""></div>
+      </div>
+      <label>رابط صفحة الكرت</label>
+      <input class="ltr" id="c_base" value="https://frontique0-web.github.io/nfc-kart/">
+      <label>المفتاح السرّي</label>
+      <input class="ltr" id="c_token" type="password" placeholder="github_pat_..." autocomplete="off">
+      <div class="row2">
+        <button class="btn gold" id="cfgSave">حفظ</button>
+        <button class="btn ghost" id="cfgTest">فحص</button>
+      </div>
+      <p class="msg" id="cfgMsg"></p>
+      <div class="help">
+        <b>شلون تجيب المفتاح:</b>
+        <ol>
+          <li>افتح github.com/settings/personal-access-tokens/new</li>
+          <li>اختار المستودع <b>nfc-kart</b> بس</li>
+          <li>بالصلاحيات: <b>Contents</b> ← <b>Read and write</b></li>
+          <li>انسخ المفتاح وحطه هون واكبس حفظ</li>
+        </ol>
+        المفتاح بينحفظ بموبايلك بس، ما بينرفع مع الموقع.
+      </div>
+    </details>
+  </div>
+
+  <!-- الصورة -->
+  <div class="card">
+    <h2>الصورة</h2>
+    <div class="photo">
+      <div class="thumb" id="thumb">بدون صورة</div>
+      <div class="side">
+        <label class="pick" for="file">اختار صورة</label>
+        <input type="file" id="file" accept="image/*">
+        <div class="seg" id="shape">
+          <button data-v="p" class="on">صورة شخصية</button>
+          <button data-v="l">لوجو</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- المعلومات -->
+  <div class="card">
+    <h2>المعلومات</h2>
+    <label>الاسم *</label><input id="n" placeholder="Ahmet Yılmaz">
+    <label>الشغلة أو اسم الشركة</label><input id="t" placeholder="Emlak Danışmanı · Vorzen">
+    <label>نبذة قصيرة</label><textarea id="b" placeholder="سطر أو سطرين"></textarea>
+    <label>لون الصفحة</label>
+    <div class="seg" id="theme">
+      <button data-v="" class="on">فاتح</button>
+      <button data-v="d">غامق</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>الروابط</h2>
+    <p class="help" style="margin:0 0 6px">اكتب الاسم بس أو الرابط كامل، الاتنين بيمشوا. الرقم مع مفتاح الدولة: 905xxxxxxxxx</p>
+    <div class="grid">
+      <div><label>رقم الهاتف</label><input class="ltr" id="p" inputmode="tel" placeholder="905xxxxxxxxx"></div>
+      <div><label>واتساب</label><input class="ltr" id="w" inputmode="tel" placeholder="905xxxxxxxxx"></div>
+      <div><label>انستغرام</label><input class="ltr" id="ig" placeholder="kullaniciadi"></div>
+      <div><label>تيك توك</label><input class="ltr" id="tt" placeholder="kullaniciadi"></div>
+      <div><label>فيسبوك</label><input class="ltr" id="fb" placeholder="kullaniciadi"></div>
+      <div><label>سناب شات</label><input class="ltr" id="sc" placeholder="kullaniciadi"></div>
+      <div><label>يوتيوب</label><input class="ltr" id="yt" placeholder="kanal"></div>
+      <div><label>إكس</label><input class="ltr" id="x" placeholder="kullaniciadi"></div>
+      <div><label>لينكد إن</label><input class="ltr" id="li" placeholder="kullaniciadi"></div>
+      <div><label>تيليغرام</label><input class="ltr" id="tg" placeholder="kullaniciadi"></div>
+    </div>
+    <label>الإيميل</label><input class="ltr" id="e" inputmode="email" placeholder="ad@ornek.com">
+    <label>الموقع الإلكتروني</label><input class="ltr" id="web" placeholder="ornek.com">
+    <label>الموقع عالخريطة (رابط أو عنوان)</label><input class="ltr" id="m" placeholder="https://maps.app.goo.gl/...">
+  </div>
+
+  <div class="card">
+    <h2>الإيبان (اختياري)</h2>
+    <label>البنك</label><select id="bk"><option value="">اختار البنك</option><optgroup label="بنوك حكومية"><option>Ziraat Bankası</option><option>VakıfBank</option><option>Halkbank</option></optgroup><optgroup label="بنوك خاصة"><option>Türkiye İş Bankası</option><option>Garanti BBVA</option><option>Yapı Kredi</option><option>Akbank</option><option>QNB</option><option>DenizBank</option><option>TEB</option><option>ING</option><option>HSBC</option><option>Şekerbank</option><option>Fibabanka</option><option>Odeabank</option><option>Burgan Bank</option><option>Anadolubank</option><option>Alternatif Bank</option></optgroup><optgroup label="بنوك المشاركة"><option>Kuveyt Türk</option><option>Albaraka Türk</option><option>Türkiye Finans</option><option>Ziraat Katılım</option><option>Vakıf Katılım</option><option>Emlak Katılım</option></optgroup><optgroup label="بنوك رقمية"><option>Enpara</option><option>Papara</option><option>ininal</option><option>Colendi</option><option>Hayat Finans</option></optgroup><option value="__other">بنك تاني (اكتبه)</option></select>
+    <input class="ltr hidden" id="bk2" placeholder="اسم البنك" style="margin-top:8px">
+    <label>اسم صاحب الحساب</label><input id="ah" placeholder="AHMET YILMAZ">
+    <label>رقم الإيبان</label><input class="ltr" id="ib" placeholder="TR00 0000 0000 0000 0000 0000 00" autocapitalize="characters" spellcheck="false">
+    <p class="help" id="ibMsg" style="margin-top:6px"></p>
+  </div>
+
+  <button class="btn gold" id="go">توليد الرابط</button>
+  <p class="msg" id="goMsg"></p>
+
+  <div class="card hidden" id="result">
+    <h2>الرابط الجاهز</h2>
+    <div class="out" id="out"></div>
+    <div class="meter"><span id="size"></span><span id="fit"></span></div>
+    <div class="row2">
+      <button class="btn gold" id="copy">نسخ الرابط</button>
+      <a class="btn ghost" id="preview" target="_blank" rel="noopener">معاينة</a>
+    </div>
+    <p class="help" id="waitNote"></p>
+    <button class="btn ghost" id="reset">زبون جديد</button>
+  </div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const FIELDS = ['n','t','b','p','w','ig','tt','fb','sc','yt','x','li','tg','e','web','m'];
+const CFG_KEYS = ['owner','repo','branch','folder','base','token'];
+const LIMIT = 850; // مساحة الرابط بشريحة ٨٨٨ بايت بعد حساب الإضافات
+
+// ---------- الإعدادات ----------
+function loadCfg(){
+  try{
+    let c = JSON.parse(localStorage.getItem('vz_kart_cfg2') || 'null');
+    if (!c) { const old = JSON.parse(localStorage.getItem('vz_kart_cfg') || '{}'); c = { token: old.token || '' }; }
+    CFG_KEYS.forEach(k => { if (c[k]) $('c_'+k).value = c[k]; });
+    if (!c.token) $('cfgBox').open = true;
+  }catch{ $('cfgBox').open = true; }
+}
+function cfg(){ const o={}; CFG_KEYS.forEach(k => o[k] = $('c_'+k).value.trim()); if (o.base && !o.base.endsWith('/')) o.base += '/'; o.folder = o.folder.replace(/^\/+|\/+$/g,''); return o; }
+function msg(el, t, kind){ el.textContent = t; el.className = 'msg ' + (kind || ''); }
+
+$('cfgSave').onclick = () => {
+  try{ localStorage.setItem('vz_kart_cfg2', JSON.stringify(cfg())); msg($('cfgMsg'),'انحفظت ✓','ok'); }
+  catch{ msg($('cfgMsg'),'ما قدرت احفظ بهالمتصفح','bad'); }
+};
+$('cfgTest').onclick = async () => {
+  const c = cfg(); msg($('cfgMsg'),'عم افحص…');
+  try{
+    const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}`, { headers: hdr(c) });
+    if (r.status === 401) return msg($('cfgMsg'),'المفتاح غلط أو منتهي','bad');
+    if (r.status === 404) return msg($('cfgMsg'),'المستودع مو موجود أو المفتاح ما إلو صلاحية عليه','bad');
+    const j = await r.json();
+    if (j.permissions && j.permissions.push) msg($('cfgMsg'),'كل شي تمام ✓ جاهز للرفع','ok');
+    else msg($('cfgMsg'),'المفتاح بيقرا بس، لازم صلاحية الكتابة','bad');
+  }catch{ msg($('cfgMsg'),'ما في اتصال بالنت','bad'); }
+};
+const hdr = c => ({ 'Authorization': 'Bearer ' + c.token, 'Accept': 'application/vnd.github+json' });
+
+// ---------- الصورة ----------
+let shape = 'p', theme = '', srcImg = null, uploaded = null; // uploaded = {key, file}
+document.querySelectorAll('#theme button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#theme button').forEach(x => x.classList.toggle('on', x === b));
+  theme = b.dataset.v;
+});
+document.querySelectorAll('#shape button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#shape button').forEach(x => x.classList.toggle('on', x === b));
+  shape = b.dataset.v; $('thumb').classList.toggle('logo', shape === 'l'); uploaded = null;
+});
+$('file').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const url = URL.createObjectURL(f); const im = new Image();
+  im.onload = () => { srcImg = im; uploaded = null; $('thumb').innerHTML = ''; const t = new Image(); t.src = url; $('thumb').appendChild(t); };
+  im.onerror = () => msg($('goMsg'),'هالصورة ما انفتحت، جرّب غيرها','bad');
+  im.src = url;
+};
+function render(){
+  const S = shape === 'p' ? 900 : 600, cv = document.createElement('canvas'); cv.width = cv.height = S;
+  const ctx = cv.getContext('2d'); ctx.imageSmoothingQuality = 'high';
+  const w = srcImg.naturalWidth, h = srcImg.naturalHeight;
+  if (shape === 'p') { // قص مربع من النص
+    const s = Math.min(w, h); ctx.drawImage(srcImg, (w-s)/2, (h-s)/2, s, s, 0, 0, S, S);
+    return { data: cv.toDataURL('image/jpeg', .84), ext: 'jpg' };
+  }
+  const k = Math.min(S/w, S/h), dw = w*k, dh = h*k; // لوجو: بدون قص ومع الشفافية
+  ctx.drawImage(srcImg, (S-dw)/2, (S-dh)/2, dw, dh);
+  return { data: cv.toDataURL('image/png'), ext: 'png' };
+}
+const rid = () => Date.now().toString(36).slice(-4) + Math.random().toString(36).slice(2, 5);
+
+async function upload(c){
+  const { data, ext } = render();
+  const file = rid() + '.' + ext;
+  const path = (c.folder ? c.folder + '/' : '') + 'img/' + file;
+  const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`, {
+    method: 'PUT', headers: { ...hdr(c), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'kart: ' + ($('n').value.trim() || 'foto'), content: data.split(',')[1], branch: c.branch || 'main' })
+  });
+  if (r.status === 401) throw 'المفتاح غلط أو منتهي';
+  if (r.status === 403 || r.status === 404) throw 'المفتاح ما إلو صلاحية كتابة على المستودع';
+  if (!r.ok) throw 'فشل الرفع (' + r.status + ')';
+  return file;
+}
+
+// ---------- التوليد ----------
+$('go').onclick = async () => {
+  const c = cfg(), name = $('n').value.trim();
+  if (!name) return msg($('goMsg'),'لازم تكتب الاسم','bad');
+  if (!c.base) return msg($('goMsg'),'حط رابط صفحة الكرت بالإعدادات','bad');
+  const btn = $('go'); btn.disabled = true;
+  try{
+    let file = '';
+    if (srcImg) {
+      const key = shape + '|' + srcImg.src;
+      if (uploaded && uploaded.key === key) file = uploaded.file;
+      else {
+        if (!c.token) { $('cfgBox').open = true; throw 'حط المفتاح السرّي بالإعدادات أول'; }
+        msg($('goMsg'),'عم ارفع الصورة…');
+        file = await upload(c); uploaded = { key, file };
+      }
+    }
+    const q = new URLSearchParams();
+    FIELDS.forEach(k => { const v = $(k).value.trim(); if (v) q.set(k, v); });
+    const ibv = $('ib').value.replace(/\s+/g, '').toUpperCase();
+    if (ibv) {
+      if (!/^TR\d{24}$/.test(ibv)) throw 'رقم الإيبان لازم يبلّش بـ TR وبعده ٢٤ رقم';
+      q.set('ib', ibv);
+      const bank = $('bk').value === '__other' ? $('bk2').value.trim() : $('bk').value;
+      if (bank) q.set('bk', bank);
+      if ($('ah').value.trim()) q.set('ah', $('ah').value.trim());
+    }
+    if (file) { q.set('i', file); if (shape === 'l') q.set('s', 'l'); }
+    if (theme) q.set('th', theme);
+    const link = c.base + '?' + q.toString();
+    show(link, !!file);
+    msg($('goMsg'),'');
+  }catch(err){ msg($('goMsg'), typeof err === 'string' ? err : 'صار خطأ، جرّب كمان مرة', 'bad'); }
+  btn.disabled = false;
+};
+
+function show(link, hasImg){
+  $('result').classList.remove('hidden');
+  $('out').textContent = link;
+  $('preview').href = link;
+  const bytes = new TextEncoder().encode(link.replace(/^https?:\/\/(www\.)?/, '')).length + 10;
+  $('size').textContent = 'الحجم: ' + bytes + ' بايت';
+  const ok = bytes <= LIMIT;
+  $('fit').textContent = ok ? 'بيركب عالشريحة ✓' : 'كبير! قصّر النبذة أو الروابط';
+  $('fit').style.color = ok ? 'var(--ok)' : 'var(--bad)';
+  $('waitNote').textContent = hasImg ? 'الصورة بتحتاج دقيقة أو دقيقتين لتطلع عالموقع، إذا ما طلعت بالمعاينة استنى شوي وحدّث.' : '';
+  $('copy').textContent = 'نسخ الرابط';
+  $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+$('copy').onclick = async () => {
+  const t = $('out').textContent;
+  try { await navigator.clipboard.writeText(t); }
+  catch {
+    const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  }
+  $('copy').textContent = 'انتسخ ✓';
+};
+$('reset').onclick = () => {
+  FIELDS.forEach(k => $(k).value = '');
+  ['ib','ah','bk2'].forEach(k => $(k).value = ''); $('bk').value = ''; $('bk2').classList.add('hidden'); $('ibMsg').textContent = '';
+  srcImg = null; uploaded = null; $('file').value = '';
+  theme = ''; document.querySelectorAll('#theme button').forEach((x, i) => x.classList.toggle('on', i === 0)); $('thumb').innerHTML = 'بدون صورة';
+  $('result').classList.add('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+$('bk').onchange = () => $('bk2').classList.toggle('hidden', $('bk').value !== '__other');
+$('ib').oninput = () => {
+  const v = $('ib').value.replace(/\s+/g, '').toUpperCase();
+  $('ibMsg').textContent = !v ? '' : /^TR\d{24}$/.test(v) ? 'الإيبان مظبوط ✓' : 'لسّا ناقص: ' + v.length + ' من ٢٦';
+  $('ibMsg').style.color = /^TR\d{24}$/.test(v) ? 'var(--ok)' : 'var(--muted)';
+};
+loadCfg();
+</script>
+</body>
+</html>
